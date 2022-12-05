@@ -28,6 +28,11 @@ fs.readFile('./input.txt', 'utf8', (err, data) => {
     console.log('----------------')
 
     for (let row = muscleCrateOrder.length - 1; row > -1; row--) {
+
+      muscleCrateOrder[row]
+
+
+
       console.log(muscleCrateOrder[row])
     }
     console.log(instructions[0])
