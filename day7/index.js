@@ -24,46 +24,42 @@ fs.readFile('./input.txt', 'utf8', (err, data) => {
             currentDirPath = ['/']
         } else {
             currentDirPath.push(param)
-            checkAndSetLocation()
         }
     }
 
-    const checkAndSetLocation = () => {
+    const writeValueAtCurrentBando = (name, value) => {
+        node = directory
+        console.log('directory', directory)
+        console.log('node', node)
         for (let cursor = 0; cursor < currentDirPath.length; cursor++) {
-
+            console.log('cursor', cursor)
+            if (cursor === currentDirPath.length - 1) {
+                console.log('fuck!')
+                node[name] = value
+            } else {
+                console.log('currentDirPath', currentDirPath)
+                console.log('node', node)
+                console.log('currentDirPath[cursor]', currentDirPath[cursor])
+                node = node[currentDirPath[cursor]]
+            }
         }
     }
-
-    // const maxPrimeRecursionHiddenTechnique = (path,)
-
-    let readNextLine = false
     
-    const listDirectory = () => {
-        readNextLine = true
-    }
+    const getNode = (name, value, currentNode) => {
 
-    const writeValueAtCurrentBando = val => {
-        // let 
-    }
-
-    // const setTreeItem = params
-    
-    const commands = {
-        'cd': changeDirectory,
-        'ls': listDirectory,
     }
     
-    
-    data.split(/\r?\n/).forEach(command => {
+    data.split(/\r?\n/).forEach((command, index) => {
+        if (index > 25) return
         const params = command.split(' ')
-        if (command.startsWith('$')) {
-            readNextLine = false
-            commands[params[1]](params[2])
-        } else {
+        if (command.startsWith('$ cd')) {
+            changeDirectory(params[2])
+        } else if (!command.startsWith('$ ls')) {
+            // this must be a read since it isnt ls and isnt cd
             if (params[0] === 'dir') {
-                writeValueAtCurrentBando({ type: 'dir', name: params[1], value: [] })
+                writeValueAtCurrentBando(params[1], {})
             } else {
-                writeValueAtCurrentBando({ type: 'file', name: params[1], value: parseInt(params[0]) })
+                writeValueAtCurrentBando(params[1], parseInt(params[0]))
             }
         }
     })
@@ -71,7 +67,8 @@ fs.readFile('./input.txt', 'utf8', (err, data) => {
     console.log(JSON.stringify(directory))
     // console.log(elfCommands)
     
-    
+    // dir lswlpt
+    // 189381 mzsnhlf
 })
 
 
